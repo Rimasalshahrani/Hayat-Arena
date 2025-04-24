@@ -1,0 +1,38 @@
+import SwiftUI
+
+struct SplashView: View {
+    @State private var isActive = false
+    @AppStorage("hasSeenOnboarding") var hasSeenOnboarding: Bool = false
+
+    var body: some View {
+        Group {
+            if isActive {
+                if hasSeenOnboarding {
+                    LoginView()
+                } else {
+                    OnboardingView()
+                }
+            } else {
+                VStack {
+                    Image(systemName: "sparkles")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.green)
+                    Text("Hayat Arena")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.green)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.white)
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    isActive = true
+                }
+            }
+        }
+    }
+}
